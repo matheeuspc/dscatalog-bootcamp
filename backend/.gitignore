@@ -8,7 +8,9 @@
 *.ear
 *.nar
 hs_err_pid*
-
+dscatalog.iml
+HELP.md
+.gitignore
 ##############################
 ## Maven
 ##############################
