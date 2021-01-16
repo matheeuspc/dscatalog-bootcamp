@@ -5,6 +5,7 @@ import com.mcardoso.dscatalog.entities.Category;
 import com.mcardoso.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.feed.RssChannelHttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -43,6 +44,12 @@ public class CategoryResource {
     public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto){
         dto = categoryService.update(id, dto);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<CategoryDTO> update(@PathVariable Long id){
+        categoryService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
