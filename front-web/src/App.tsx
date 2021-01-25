@@ -1,3 +1,6 @@
+import './core/assets/styles/custom.scss';
+import './app.scss';
+
 const App = () => {
 
   return (
