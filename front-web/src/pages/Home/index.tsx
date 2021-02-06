@@ -1,7 +1,7 @@
 import './styles.scss';
 import { Link } from 'react-router-dom';
-import { ReactComponent as MainImage } from '../../core/assets/images/main-image.svg';
-import ButtonIcon from '../../core/components/ButtonIcon';
+import { ReactComponent as MainImage } from 'core/assets/images/main-image.svg';
+import ButtonIcon from 'core/components/ButtonIcon';
 
 const Home = () => (
     <div className="home-container">
