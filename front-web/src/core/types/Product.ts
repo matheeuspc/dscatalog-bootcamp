@@ -1,3 +1,4 @@
+
 export type ProductsResponse = {
     content: Product[];
     totalPages: number;
