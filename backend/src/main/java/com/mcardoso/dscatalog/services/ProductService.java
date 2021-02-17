@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -29,10 +31,11 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
-        Page<Product> list = productRepository.findAll(pageRequest);
-
-        return list.map(x -> new ProductDTO(x, x.getCategories()));
+    public Page<ProductDTO> findAllPaged(Long categoryId, String name, PageRequest pageRequest) {
+        Category category = (categoryId == 0) ? null : categoryRepository.getOne(categoryId);
+        Page<Product> page = productRepository.find(category, name, pageRequest);
+        productRepository.findProductsCategories((page.stream().collect(Collectors.toList())));
+        return page.map(x -> new ProductDTO(x, x.getCategories()));
     }
 
     @Transactional(readOnly = true)
