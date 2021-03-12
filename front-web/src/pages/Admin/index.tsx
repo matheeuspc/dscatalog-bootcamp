@@ -8,7 +8,7 @@ const Admin = () => (
         <Navbar />
         <div className="admin-content">
             <Switch>
-            <Route path="/admin/products">
+                <Route path="/admin/products">
                     <Products />
                 </Route>
                 <Route path="/admin/categories">
