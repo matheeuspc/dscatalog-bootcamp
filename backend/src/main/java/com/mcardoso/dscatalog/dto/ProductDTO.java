@@ -2,7 +2,6 @@ package com.mcardoso.dscatalog.dto;
 
 import com.mcardoso.dscatalog.entities.*;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
