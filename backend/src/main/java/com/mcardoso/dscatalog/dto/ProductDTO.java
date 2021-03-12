@@ -1,7 +1,6 @@
 package com.mcardoso.dscatalog.dto;
 
-import com.mcardoso.dscatalog.entities.Category;
-import com.mcardoso.dscatalog.entities.Product;
+import com.mcardoso.dscatalog.entities.*;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
