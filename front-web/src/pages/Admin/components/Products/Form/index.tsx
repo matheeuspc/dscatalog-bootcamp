@@ -1,4 +1,5 @@
-import { makeRequest } from 'core/utils/request';
+
+import { makePrivateRequest } from 'core/utils/request';
 import { useState } from 'react';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
@@ -33,7 +34,8 @@ const Form = () => {
             imgUrl: 'https://live.staticflickr.com/65535/50544735806_dd39e95f06_h.jpg',
             categories: [{ id: formData.category }]
         }
-        makeRequest({url: '/products', method: 'POST', data: payload})
+
+        makePrivateRequest({url: '/products', method: 'POST', data: payload})
         .then(() => {
             setFormData({name: '', category: '1', price: '', description: ''})
         })
@@ -52,7 +54,7 @@ const Form = () => {
                             className="form-control mb-5"
                             onChange={handleOnChange}
                             placeholder="Nome do produto"
-                        />
+                        />                        
                         <select 
                             value={formData.category}
                             name="category" 
