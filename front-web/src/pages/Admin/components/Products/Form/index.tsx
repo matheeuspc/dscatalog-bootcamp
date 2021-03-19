@@ -9,6 +9,7 @@ import BaseForm from '../../BaseForm';
 import './styles.scss';
 import { Category } from 'core/types/Product';
 import PriceField from './PriceField';
+import ImageUpload from '../ImageUpload';
 
 export type FormState = {
     name: string;
@@ -119,18 +120,7 @@ const Form = () => {
                             )}
                         </div>
                         <div className="margin-bottom-30">
-                            <input
-                                ref={register({ required: "Campo obrigatório" })}
-                                name="imgUrl"
-                                type="text"
-                                className="form-control input-base"
-                                placeholder="Imagem do produto"
-                            />
-                            {errors.imgUrl && (
-                                <div className="invalid-feedback d-block">
-                                    {errors.imgUrl.message}
-                                </div>
-                            )}
+                            <ImageUpload />
                         </div>
                     </div>
                     <div className="col-6">
