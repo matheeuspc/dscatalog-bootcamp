@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
+import Select from 'react-select'
 import BaseForm from '../../BaseForm';
 import './styles.scss';
 
@@ -17,6 +18,12 @@ type FormState = {
 type ParamsType = {
     productId: string;
 }
+
+const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
 
 const Form = () => {
     const { register, handleSubmit, errors, setValue} = useForm<FormState>();
@@ -74,6 +81,14 @@ const Form = () => {
                                     {errors.name.message}
                                 </div>
                             )}
+                        </div>
+                        <div className="margin-bottom-30">
+                            <Select 
+                                options={options}
+                                placeholder="Categoria"
+                                classNamePrefix="categories-select"
+                                isMulti
+                            />
                         </div>
                         <div className="margin-bottom-30">
                             <input
