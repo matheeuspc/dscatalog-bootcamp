@@ -1,34 +1,32 @@
 
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useForm, Controller} from 'react-hook-form';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import Select from 'react-select'
 import BaseForm from '../../BaseForm';
 import './styles.scss';
+import { Category } from 'core/types/Product';
 
 type FormState = {
     name: string;
     price: string;
     description: string;
     imgUrl: string;
+    categories: Category[];
 }
 
 type ParamsType = {
     productId: string;
 }
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ]
-
 const Form = () => {
-    const { register, handleSubmit, errors, setValue} = useForm<FormState>();
+    const { register, handleSubmit, errors, setValue, control} = useForm<FormState>();
     const history = useHistory();
     const { productId } = useParams<ParamsType>();
+    const [isLoadingCategories, setIsLoadingCategories] = useState(false);
+    const [categories, setCategories] = useState<Category[]>([]);
     const isEditing = productId !== 'create';
     const formTitle = isEditing ? 'editar produto' : 'cadastrar um produto';
 
@@ -40,9 +38,17 @@ const Form = () => {
                 setValue('price', response.data.price);
                 setValue('imgUrl', response.data.imgUrl);
                 setValue('description', response.data.description);
+                setValue('categories', response.data.categories);
         })
         }
     }, [productId, isEditing, setValue]);
+
+    useEffect(() => {
+        setIsLoadingCategories(true);
+        makeRequest({ url: '/categories'})
+            .then(response => setCategories(response.data.content))
+            .finally(() => setIsLoadingCategories(false));
+    }, []);
 
     const onSubmit = (data: FormState) => {
         makePrivateRequest({ 
@@ -83,12 +89,24 @@ const Form = () => {
                             )}
                         </div>
                         <div className="margin-bottom-30">
-                            <Select 
-                                options={options}
-                                placeholder="Categoria"
+                            <Controller
+                                as={Select} 
+                                name="categories"
+                                rules={{ required: true}}
+                                control={control}
+                                isLoading={isLoadingCategories}
+                                options={categories}
+                                getOptionLabel = { (option: Category) => option.name}
+                                getOptionValue = { (option: Category) => String(option.id)}
+                                placeholder="Categorias"
                                 classNamePrefix="categories-select"
                                 isMulti
                             />
+                            {errors.categories && (
+                                <div className="invalid-feedback d-block">
+                                    Campo obrigatório
+                                </div>
+                            )}
                         </div>
                         <div className="margin-bottom-30">
                             <input
