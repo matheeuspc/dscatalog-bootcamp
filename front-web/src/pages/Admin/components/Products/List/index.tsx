@@ -1,6 +1,6 @@
 import './styles.scss';
 import Card from '../Card';
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useEffect, useState, useCallback } from 'react';
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
 import { ProductsResponse } from 'core/types/Product';
