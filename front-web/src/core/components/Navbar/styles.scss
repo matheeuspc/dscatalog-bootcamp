@@ -63,7 +63,8 @@
         justify-content: space-between;
     }
 
-    .menu-container, .user-info-dnone {
+    .menu-container, 
+    .user-info-dnone {
         display: none;
     }
 
@@ -84,7 +85,7 @@
         width: 100%;
         top: 70px;
         left: 0;
-        display: flex;
+        display: flex; 
         flex-direction: column;
         padding: 10px;
         background: #407bff;
@@ -103,8 +104,7 @@
 
     .menu-mobile-container ul li {
         width: 96vw;
-        margin: 5px 0;
-
+        margin: 5px 0px;
     }
 }
 
