@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image, ScrollView, ActivityIndicator, ActivityIndicatorComponent } from 'react-native';
 
-import { SearchInput, ProductCard} from '../../../components';
-import { getProducts } from '../../../services'
+import { SearchInput, ProductCard } from '../../../components';
+import { getProducts, deleteProduct } from '../../../services'
 import { admin, text, theme } from '../../../styles';
 
-interface ProductProps  {
+interface ProductProps {
     setScreen: Function;
 }
 
@@ -15,6 +15,13 @@ const Products: React.FC<ProductProps> = (props) => {
     const [loading, setLoading] = useState(false);
 
     const { setScreen } = props;
+
+    async function handleDelete(id: number) {
+        setLoading(true);
+        const res = await deleteProduct(id);
+        fillProducts();
+        setLoading(false);
+    }
 
     async function fillProducts() {
         setLoading(true);
@@ -27,14 +34,14 @@ const Products: React.FC<ProductProps> = (props) => {
         fillProducts();
     }, []);
 
-    const data = 
-    search.length > 0 ? products.filter(product => 
-            product.name.toLowerCase().includes(search.toLowerCase())) 
-        : products;
+    const data =
+        search.length > 0 ? products.filter(product =>
+            product.name.toLowerCase().includes(search.toLowerCase()))
+            : products;
 
     return (
         <ScrollView contentContainerStyle={admin.container}>
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={admin.addButton}
                 onPress={() => setScreen("newProduct")}
             >
@@ -43,9 +50,18 @@ const Products: React.FC<ProductProps> = (props) => {
             <SearchInput search={search} setSearch={setSearch} placeholder="Nomem do produto" />
             {
                 loading ? (<ActivityIndicator size="large" />) :
-                (data.map(product => (
-                    <ProductCard {...product} key={product.id} role="admin"/>
-                )))
+                    (data.map(product => {
+                        const { id } = product;
+
+                        return (
+                            <ProductCard
+                                {...product}
+                                key={id}
+                                role="admin"
+                                handleDelete={handleDelete}
+                            />
+                        )
+                    }))
             }
         </ScrollView>
     );
