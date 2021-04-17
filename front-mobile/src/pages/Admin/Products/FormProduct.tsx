@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image, Modal, TextInput, ScrollView, ActivityIndicator, Alert, ActivityIndicatorComponent } from 'react-native';
 
 import { SearchInput, ProductCard } from '../../../components';
-import { createProduct, getCategories } from '../../../services'
+import { createProduct, getCategories, uploadImage } from '../../../services'
 import { admin, text, theme } from '../../../styles';
+
+import * as ImagePicker from 'expo-image-picker';
 
 import Toast from 'react-native-tiny-toast';
 import { TextInputMask } from 'react-native-masked-text';
@@ -28,6 +30,39 @@ const FormProduct: React.FC<FormProductProps> = (props) => {
         price: "",
         categories: [],
     });
+
+    const [image, setImage] = useState("");
+
+    useEffect(() => {
+        async () => {
+            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if(status != 'granted'){
+                Alert.alert("Precisamos de acesso a biblioteca de imagens!");
+            }
+        };
+    }, []);
+
+    async function selectImage() {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality: 1
+        });
+
+        setImage(result.uri);
+    }
+
+    async function handleUpload() {
+        uploadImage(image).then( res => {
+            const { uri } = res?.data;
+            setProduct({...product, imgUrl: uri });
+        });
+    };
+
+    useEffect(() => {
+        image ? handleUpload() : null;
+    }, [image]);
 
     function handleSave() {
         !edit && newProduct();
@@ -136,17 +171,32 @@ const FormProduct: React.FC<FormProductProps> = (props) => {
                                     }
                                 </Text>
                             </TouchableOpacity>
-                            <TextInputMask 
+                            <TextInputMask
                                 type={"money"}
                                 placeholder="Preço"
                                 style={theme.formInput}
                                 value={product.price}
                                 onChangeText={(e) => setProduct({ ...product, price: e })}
                             />
-                            <TouchableOpacity activeOpacity={0.8} style={theme.uploadBtn}>
+                            <TouchableOpacity 
+                                activeOpacity={0.8} 
+                                style={theme.uploadBtn}
+                                onPress={selectImage}
+                            >
                                 <Text style={text.uploadText}>Carregar imagem</Text>
                             </TouchableOpacity>
                             <Text style={text.fileSize}>As imagens devem ser JPG ou PNGe não devem ultrapassar 5 mb.</Text>
+                            {
+                                image != "" && (
+                                    <TouchableOpacity 
+                                        onPress={selectImage} 
+                                        activeOpacity={0.9} 
+                                        style={{width: "100%", height: 150, borderRadius: 10, marginVertical: 10}}
+                                    >
+                                        <Image source={{uri: image}} style={{width: "100%", height: "100%", borderRadius: 10}} />
+                                    </TouchableOpacity>
+                                )
+                            }
                             <TextInput
                                 multiline placeholder="Descrição"
                                 style={theme.textArea}
