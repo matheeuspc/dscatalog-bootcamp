@@ -11,9 +11,10 @@ interface ProductProps {
     price: string;
     role?: string;
     handleDelete: Function;
+    handleEdit: Function;
 }
 
-const ProductCard: React.FC<ProductProps> = ({ id, name, imgUrl, price, role, handleDelete}) => {
+const ProductCard: React.FC<ProductProps> = ({ id, name, imgUrl, price, role, handleDelete, handleEdit}) => {
     const navigation = useNavigation();
 
     return (
@@ -39,7 +40,6 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, imgUrl, price, role, ha
                         editable={false}
                         style={text.productPrice}
                     />
-                    {/* <TextInputMask style={text.productPrice}>{price}</TextInputMask> */}
                 </View>
                 {
                     role === 'admin' && (
@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, imgUrl, price, role, ha
                                 <Text style={text.deleteBtnText}>Excluir</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => true}
+                                onPress={() => handleEdit(id)}
                                 style={theme.editBtn}
                             >
                                 <Text style={text.editBtnText}>Editar</Text>
