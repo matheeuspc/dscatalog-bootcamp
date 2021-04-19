@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, Image, Modal, TextInput, ScrollView, ActivityIndicator, Alert, ActivityIndicatorComponent } from 'react-native';
+import { View, TouchableOpacity, Text, Image, Modal, TextInput, ScrollView, ActivityIndicator, Alert } from 'react-native';
 
-import { SearchInput, ProductCard } from '../../../components';
 import { updateProduct, getProduct, getCategories, uploadImage } from '../../../services'
-import { admin, text, theme } from '../../../styles';
+import { text, theme } from '../../../styles';
 
 import * as ImagePicker from 'expo-image-picker';
 

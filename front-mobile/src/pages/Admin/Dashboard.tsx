@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
-import { theme, text } from '../../styles';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import { TabBar } from '../../components';
 
 import Categories from './Categories';

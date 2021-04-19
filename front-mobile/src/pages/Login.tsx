@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { theme, text } from '../styles';
@@ -6,7 +6,7 @@ import { theme, text } from '../styles';
 import arrow from '../assets/arrow.png';
 import eyesOpened from '../assets/eyes-opened.png';
 import eyesClosed from '../assets/eyes-closed.png';
-import { isAuthenticated, login } from '../services/auth';
+import { login } from '../services/auth';
 
 const Login: React.FC = () => {
     const navigation = useNavigation();

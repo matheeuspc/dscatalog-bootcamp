@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, Image, ScrollView, ActivityIndicator, ActivityIndicatorComponent } from 'react-native';
+import { TouchableOpacity, Text, ScrollView, ActivityIndicator } from 'react-native';
 
 import { SearchInput, ProductCard } from '../../../components';
 import { getProducts, deleteProduct } from '../../../services'
-import { admin, text, theme } from '../../../styles';
+import { admin, text } from '../../../styles';
 
 interface ProductProps {
     setScreen: Function;

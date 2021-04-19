@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { tabbar } from '../styles';
-import menu from '../assets/menu.png';
-import { doLogout, isAuthenticated } from '../services/auth';
 
 interface TabBarProps {
     screen: string;
